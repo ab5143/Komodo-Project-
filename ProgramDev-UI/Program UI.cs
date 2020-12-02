@@ -12,6 +12,7 @@ namespace ProgramDev_UI
 
 
         private DeveloperRepo _contentDeveloper = new DeveloperRepo();
+        private DevTeamRepo _devTeamRepo = new DevTeamRepo();
 
         public void Run()
         {
@@ -33,7 +34,9 @@ namespace ProgramDev_UI
                     "1. Create New Developer\n" +
                     "2. View All Developers\n" +
                     "3. Developers with Access To Pluralsight\n" +
-                    "4. Exit");
+                    "4. Create Teams\n" +
+                    "5. Read Teams\n" +
+                    "6. Exit");
 
 
                 //Get the User's Input
@@ -55,6 +58,14 @@ namespace ProgramDev_UI
                         DisplayNameswithPluralsight();
                         break;
                     case "4":
+                        // Create NewDevTeams
+                        CreateNewTeams();
+                        break;
+                    case "5":
+                        // Read List of DevTeams
+                        ReadDevTeams();
+                        break;
+                    case "6":
                         //Exit 
                         Console.WriteLine("Goodbye!");
                         keepRunning = false;
@@ -71,7 +82,53 @@ namespace ProgramDev_UI
             }
 
         }
-        // 1 Create New Names 
+        // 4. CreateDevTeams 
+        private void CreateNewTeams()
+        {
+            Console.Clear();
+            DevTeamContent newTeam = new DevTeamContent();
+
+            //Names 
+
+            Console.WriteLine("Enter the new DevTeam Name");
+            newTeam.TeamName = Console.ReadLine();
+
+            //Number
+            Console.WriteLine("Enter the Number for the Team");
+            newTeam.TeamNumber =  int.Parse(Console.ReadLine());
+            // Console.Readline does not read numbers only words so use Parse to convert it
+
+            // Add DevTeam to the Repo
+            _devTeamRepo.AddContentToList(newTeam);
+        }
+
+
+
+        //5.  Read List of DevTeams 
+
+        private void ReadDevTeams()
+        {
+            Console.Clear();
+            List<DevTeamContent> listOfTeams = _devTeamRepo.GetContentList();
+
+            foreach (DevTeamContent devTeam in listOfTeams)
+            {
+                Console.WriteLine(devTeam.TeamName);
+            }
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+                // 1 Create New Names 
 
         private void CreateNewName()
         {
@@ -83,7 +140,7 @@ namespace ProgramDev_UI
 
             Console.WriteLine("Enter the Name of the Developer");
             NewNames.Name = Console.ReadLine();
-            
+
 
             //ID
             Console.WriteLine("Enter the ID of the Developer");
@@ -91,13 +148,23 @@ namespace ProgramDev_UI
             NewNames.Id = int.Parse(Console.ReadLine());
 
             //AccessTo Pluralsight 
-            Console.WriteLine(" Enter the Name of the Developer Access to Check for Pluralsight Software");
+            Console.WriteLine(" Does this Developer has access to Pluralsight? Y/N");
 
+            string Response = Console.ReadLine();
+
+            if (Response == "Y")
+            {
+                NewNames.AccessToPluralSight = true;
+            }
+            else
+            {
+                NewNames.AccessToPluralSight = false;
+            }
 
             _contentDeveloper.AddNamesToList(NewNames);
         }
 
-        
+
 
         // 2 View All Developers are saved 
 
@@ -188,7 +255,7 @@ namespace ProgramDev_UI
             //Verify Update Work
             bool wasUpdated = _contentDeveloper.UpdateExistingNames(Num, newContent);
 
-            if(wasUpdated)
+            if (wasUpdated)
             {
                 Console.WriteLine("Content was Updated!");
             }
@@ -216,8 +283,8 @@ namespace ProgramDev_UI
 
             bool wasDeleted = _contentDeveloper.RemoveNameFromList(Intp);
 
-            
-                if (wasDeleted)
+
+            if (wasDeleted)
             {
                 Console.WriteLine("The Content was successfully Deleted");
             }
@@ -234,8 +301,13 @@ namespace ProgramDev_UI
 
         {
             Developer Michael = new Developer("Michael", 1, true);
+            Developer John = new Developer("John", 2, false);
+            Developer Atif = new Developer("Atif", 3, true);
+            _contentDeveloper.AddNamesToList(Michael);
+            _contentDeveloper.AddNamesToList(John);
+            _contentDeveloper.AddNamesToList(Atif);
 
-            /////////???????? Ask questionss
+
 
 
 

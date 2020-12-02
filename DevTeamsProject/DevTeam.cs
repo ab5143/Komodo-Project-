@@ -13,6 +13,12 @@ namespace DevTeamsProject
             public string TeamName { get; set; }
             public int TeamNumber { get; set; }
 
+
+            
+            public DevTeamContent() { }
+
+
+
             public DevTeamContent(string teamname, int teamnumber)
             {
                 TeamName = teamname;
